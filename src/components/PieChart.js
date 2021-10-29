@@ -22,9 +22,6 @@
 // }
 // export default PieChart
 
-
-
-
 // import React from 'react'
 
 // const PieChart=(props)=>{
@@ -33,4 +30,4 @@
 //     )
 // }
 
-// export default PieChart 
+// export default PieChart
