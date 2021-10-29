@@ -3,6 +3,7 @@ import "./App.css";
 // import PieChart from "./components/PieChart";
 import CovidDetails from "./components/CovidDetails";
 import axios from "axios";
+import Card from "./components/Card";
 
 function App() {
   const [totalCases, setTotalCases] = useState(0);
@@ -10,6 +11,7 @@ function App() {
   const [totalRecovered, setTotalRecovered] = useState(0);
   const [totalActive, setTotalActive] = useState(0);
   const [covidSummary, setCovidSummary] = useState({});
+  const [cases, setCases] = useState();
   useEffect(() => {
     axios
       .get(`https://data.covid19india.org/data.json`)
@@ -45,13 +47,30 @@ function App() {
             totalDeaths={totalDeaths}
           />
         </div>
-        <div>
-          <select>
+        <div
+          style={{
+            marginTop: "20px",
+          }}
+        >
+          <select onChange={(e) => setCases(e.target.value)}>
             {covidSummary.statewise &&
               covidSummary.statewise.map((states) => (
-                <option value={states.state}>{states.state}</option>
+                <option value={states.confirmed}>{states.state}</option>
               ))}
           </select>
+          <div
+            style={{
+              marginTop: "20px",
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            <Card>
+              <span>Total Cases </span>
+              <br />
+              <span>{cases}</span>
+            </Card>
+          </div>
         </div>
       </div>
       {/* <PieChart /> */}
