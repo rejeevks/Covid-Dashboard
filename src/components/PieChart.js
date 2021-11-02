@@ -6,8 +6,8 @@ class PieChart extends React.Component {
     super(props);
     this.state = {
       data: [{
-        values: [19, 26, 55],
-        labels: ['Residential', 'Non-Residential', 'Utility'],
+        values: [20,19, 26, 55],
+        labels: ['Total Cases','Active Cases', 'Total Recovered', 'Total Deaths'],
         type: 'pie'
       }],
       layout: {
