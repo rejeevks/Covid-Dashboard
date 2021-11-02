@@ -73,7 +73,8 @@ function App() {
           </div>
         </div>
       </div>
-      <PieChart />
+      <PieChart 
+      tcases = {cases} />
     </div>
   );
 }
