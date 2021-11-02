@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
-// import PieChart from "./components/PieChart";
+import PieChart from "./components/PieChart";
 import CovidDetails from "./components/CovidDetails";
 import axios from "axios";
 import Card from "./components/Card";
@@ -73,7 +73,7 @@ function App() {
           </div>
         </div>
       </div>
-      {/* <PieChart /> */}
+      <PieChart />
     </div>
   );
 }
