@@ -11,7 +11,9 @@ function App() {
   const [totalRecovered, setTotalRecovered] = useState(0);
   const [totalActive, setTotalActive] = useState(0);
   const [covidSummary, setCovidSummary] = useState({});
-  const [cases, setCases] = useState();
+  const [code, setCode] = useState();
+  let sortedData = [];
+
   useEffect(() => {
     axios
       .get(`https://data.covid19india.org/data.json`)
@@ -27,14 +29,22 @@ function App() {
           setTotalActive(total);
           setCovidSummary(res.data);
         }
-
-        console.log(res.data);
       })
-
       .catch((error) => {
         console.log(error);
       });
   }, []);
+
+  const onSelect = () => {
+    if (covidSummary.statewise) {
+      for (let item of covidSummary.statewise) {
+        if (code === item.statecode) {
+          sortedData.push(item);
+        }
+      }
+    }
+  };
+
   return (
     <div className="App">
       <div>
@@ -52,10 +62,13 @@ function App() {
             marginTop: "20px",
           }}
         >
-          <select onChange={(e) => setCases(e.target.value)}>
+          <select
+            onChange={(e) => setCode(e.target.value)}
+            onClick={onSelect()}
+          >
             {covidSummary.statewise &&
               covidSummary.statewise.map((states) => (
-                <option value={states.confirmed}>{states.state}</option>
+                <option value={states.statecode}>{states.state}</option>
               ))}
           </select>
           <div
@@ -66,15 +79,28 @@ function App() {
             }}
           >
             <Card>
-              <span>Total Cases </span>
-              <br />
-              <span>{cases}</span>
+              {sortedData.length > 0 && (
+                <>
+                  <h4
+                    style={{
+                      marginTop: "1px",
+                    }}
+                  >
+                    {sortedData[0].state}
+                  </h4>
+                  <span>Total Cases : {sortedData[0].confirmed}</span> <br />
+                  <span>Total Active Cases : {sortedData[0].active}</span>
+                  <br />
+                  <span>Total Recovered : {sortedData[0].recovered}</span>
+                  <br />
+                  <span>Total Deaths : {sortedData[0].deaths}</span>
+                </>
+              )}
             </Card>
           </div>
         </div>
       </div>
-      <PieChart 
-      tcases = {cases} />
+      <PieChart cases={sortedData} />
     </div>
   );
 }
